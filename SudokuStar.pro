@@ -32,12 +32,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     ../../../Pictures/sudoku star logo.png \
-    puzzles.txt \
     sudoku star logo.png \
     sudoku star logo.png
 
 RESOURCES += \
-    logo.qrc
+    logo.qrc \
+    puzzles.qrc
 
 RC_ICONS += icon.ico
 

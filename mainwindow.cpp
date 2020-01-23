@@ -10,6 +10,10 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <QFile>
+#include <QMessageBox>
+#include <QTextStream>
+#include <QDir>
 
 
 bool visualize = true;
@@ -168,8 +172,32 @@ void delay()
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
 
-std::vector<std::string> read_puzzles(){
+std::vector<std::string> MainWindow::read_puzzles(){
 
+    QString workingDir = QDir::currentPath();
+    QString path = workingDir + "/puzzles.txt";
+
+    qDebug() << path;
+
+    std::vector<std::string> puzzles;
+    QFile file(":/puzzles/puzzles.txt");
+    if(!file.open(QIODevice::ReadOnly)) {
+        QMessageBox::information(0, "error", file.errorString());
+    }
+
+    QTextStream in(&file);
+
+    while(!in.atEnd()) {
+        QString line = in.readLine();
+        std::string realString = line.toStdString();
+        puzzles.push_back(realString);
+
+    }
+
+    file.close();
+    return puzzles;
+
+    /*
     std::string filename = "C:\\Users\\KingRobert\\Documents\\C++ Projects\\SudokuStar\\puzzles.txt";
 
     std::ifstream file_(filename.c_str());
@@ -186,10 +214,11 @@ std::vector<std::string> read_puzzles(){
     }
 
     return puzzles;
+    */
 }
 
-std::array<std::array<int,9>,9> select_board(){
-    std::vector<std::string> puzzles=read_puzzles();
+std::array<std::array<int,9>,9> MainWindow::select_board(){
+    std::vector<std::string> puzzles= read_puzzles();
     srand(time(NULL));
     std::string puzzle_code = puzzles[rand() % puzzles.size()];
     std::array<std::array<int,9>,9> board;

@@ -52,6 +52,8 @@ private:
     void print_board(std::array<std::array<int, 9>, 9> board);
     void updateEntry(int i, int j, int num);
     bool isSolved(int i, int j);
+    std::vector<std::string> read_puzzles();
+    std::array<std::array<int,9>,9> select_board();
 
 };
 #endif // MAINWINDOW_H
